@@ -1,42 +1,50 @@
 var mysql = require('mysql');
 
+
 var pool = mysql.createPool({
     connectionLimit: 100,
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "book_store",
+    host: "us-cdbr-iron-east-03.cleardb.net",
+    user: "bf3507d156a390",
+    password: "eaf0f65b",
+    database: "heroku_6cbd6dcc8b88f6a",
     debug: false
 });
-var getConnection = function(callback) {
+var utilities = {}
+utilities.getConnection = function(callback) {
+    console.log("Environment variable");
+    console.log(pool)
     pool.getConnection(function(err, connection) {
         callback(err, connection);
     });
 };
-// DB.createConnection = function() {
-//     console.log("Creating Connection")
-//     DB.con = mysql.createConnection({
-//         host: process.env.DB_URL,
-//         user: process.env.DB_USER_NAME,
-//         password: "",
-//         database: process.env.DATABASE_NAME
-//     });
-// };
 
-// DB.connect = function() {
-//     DB.createConnection().then(function() {
-//         console.log("Trying to Connect")
-//         DB.con.connect(function(err) {
 
-//             if (err) {
-//                 console.log(err)
-//                 return err;
-//             }
-//             console.log("Connected");
-//             return true;
-//         });
-//     })
+utilities.executeQuery = function(query) {
+    return new Promise(function(resolve, reject) {
+        utilities.getConnection(function(err, connection) {
+            var data = [];
+            var response = { data: [], status: 1, message: "" }
+            connection.query(query, function(err, result, fields) {
+                if (err) {
+                    console.log(err)
+                    reject(err)
+                }
+                console.log(JSON.parse(JSON.stringify(result)));
 
-// };
+                response.data = JSON.parse(JSON.stringify(result))
+                if (result.length == 0) {
+                    response.message = "No users";
+                    response.status = 0;
+                } else {
+                    response.message = "Success";
+                }
+                resolve(response);
+            });
+            connection.release();
+        });
+    });
 
-module.exports = getConnection;
+}
+
+
+module.exports = utilities;

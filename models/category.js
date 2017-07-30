@@ -1,86 +1,27 @@
-var createConnection = require('../utilities/database_connection');
-
+var utilities = require('../utilities/database_connection');
 var category = {};
 
 /* Get all publications*/
 
 category.getAllCategories = function() {
-    return new Promise(function(resolve, reject) {
-        createConnection(function(err, connection) {
-            var data = [];
-            connection.query("SELECT * FROM category", function(err, result, fields) {
-                if (err) {
-                    console.log(err)
-                    reject(err)
-                }
-                console.log(JSON.parse(JSON.stringify(result)));
-                var response = { data: [], status: 1, message: "" }
-                response.data = JSON.parse(JSON.stringify(result))
-                if (result.length == 0) {
-                    response.message = "No data";
-                } else {
-                    response.message = "Success";
-                }
-                resolve(response);
-            });
-            connection.release();
-        });
-    });
+    var query = "SELECT * FROM category";
+    return utilities.executeQuery(query);
+
 };
 
 /* Get category matching id*/
 
 category.getCategoryWithId = function(id) {
-    return new Promise(function(resolve, reject) {
-        createConnection(function(err, connection) {
-            var data = [];
-            connection.query("SELECT * FROM category where category_id=" + id, function(err, result, fields) {
-                if (err) {
-                    console.log(err)
-                    reject(err)
-                }
-                console.log(JSON.parse(JSON.stringify(result)));
-                var response = { data: [], status: 1, message: "" }
-                response.data = JSON.parse(JSON.stringify(result))
-                if (result.length == 0) {
-                    response.message = "No data";
-                } else {
-                    response.message = "Success";
-                }
-                resolve(response);
-            });
-            connection.release();
-        });
-    });
+    var query = "SELECT * FROM category where category_id=" + id;
+    return utilities.executeQuery(query);
+
 };
 
 /* Get category matching name*/
 
 category.getCategoryWithName = function(name) {
-    return new Promise(function(resolve, reject) {
-        createConnection(function(err, connection) {
-            var data = [];
-            console.log(name)
-            var query = "SELECT * FROM category WHERE  category_name LIKE '" + name + "%'"
-            console.log(query)
-            connection.query(query, function(err, result, fields) {
-                if (err) {
-                    console.log(err)
-                    reject(err)
-                }
-                console.log(JSON.parse(JSON.stringify(result)));
-                var response = { data: [], status: 1, message: "" }
-                response.data = JSON.parse(JSON.stringify(result))
-                if (result.length == 0) {
-                    response.message = "No data";
-                } else {
-                    response.message = "Success";
-                }
-                resolve(response);
-            });
-            connection.release();
-        });
-    });
+    var query = "SELECT * FROM category WHERE  category_name LIKE '" + name + "%'"
+    return utilities.executeQuery(query);
 };
 
 
@@ -88,7 +29,7 @@ category.getCategoryWithName = function(name) {
 /* TODO: Take image in formdata and convert to image url and then store*/
 category.insert = function(categories) {
     return new Promise(function(resolve, reject) {
-        createConnection(function(err, connection) {
+        utilities.getConnection(function(err, connection) {
             var data = [];
             var values = "";
             console.log(categories)
@@ -128,7 +69,7 @@ category.insert = function(categories) {
 /* TODO: Take image in formdata and convert to image url and then store*/
 category.update = function(category) {
     return new Promise(function(resolve, reject) {
-        createConnection(function(err, connection) {
+        utilities.getConnection(function(err, connection) {
             var data = [];
             var query = "UPDATE `category` SET category.category_name = '" + category.category_name + "' WHERE category.category_id='" + category.category_id + "'";
             connection.query(query, function(err, result, fields) {
@@ -155,7 +96,7 @@ category.update = function(category) {
 /* Delete a category*/
 category.delete = function(category_id) {
     return new Promise(function(resolve, reject) {
-        createConnection(function(err, connection) {
+        utilities.getConnection(function(err, connection) {
             var data = [];
             var query = "DELETE FROM `category` WHERE `category_id` = '" + category_id + "'";
             connection.query(query, function(err, result, fields) {

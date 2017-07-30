@@ -1,5 +1,5 @@
-var createConnection = require('../utilities/database_connection');
-
+var createConnection = require('../utilities/database_connection').getConnection;
+var dateFormat = require('dateformat');
 var book = {};
 
 /* Get all books*/
@@ -331,18 +331,24 @@ book.buy = function(orderDetails) {
     }
     //
 
-book.totalBooksSold = function() {
+book.totalBooksSold = function(fromDate, toDate, bookId) {
     return new Promise(function(resolve, reject) {
         createConnection(function(err, connection) {
             var data = [];
-            var query = "SELECT SUM(quantity) as total_books_sold FROM `order_details`";
+            var query = "SELECT IFNULL(SUM(quantity),0) as total_books_sold FROM `order_details`";
+            if (fromDate) {
+                query += "WHERE `date_of_purchase` BETWEEN '" + dateFormat(fromDate, "yyyy-mm-dd , h:MM:ss ") + "' AND '" + (dateFormat(toDate, "yyyy-mm-dd , h:MM:ss ") || new Date()) + "'"
+            }
+            if (bookId) {
+                query += " AND book_id = '" + bookId + "'";
+            }
+            console.log(query)
             connection.query(query, function(err, result, fields) {
                 if (err) {
                     console.log(err)
                     reject(err)
                 }
-                console.log(JSON.parse(JSON.stringify(result)));
-                console.log(JSON.parse(JSON.stringify(result)));
+
                 var response = { data: [], status: 1, message: "" }
                 response.data = JSON.parse(JSON.stringify(result))
                 if (result.length == 0) {

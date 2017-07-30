@@ -5,8 +5,16 @@ var publication = require('../models/publication');
 var category = require('../models/category');
 var author = require('../models/author');
 var user = require('../models/user');
+var expressJWT = require('express-jwt');
+var middleware = require('./middleware');
 
 require('dotenv').config();
+
+
+
+router.use(expressJWT({ secret: process.env.JWT_SECRET }, function(err, req, res, next) {
+    res.send(err);
+}).unless({ path: ['/api/login'] }));
 
 /* GET all books listing. */
 router.get('/books', function(req, res, next) {
@@ -265,6 +273,7 @@ router.delete('/user', function(req, res, next) {
 
 /* Login user(s) */
 router.post('/login', function(req, res, next) {
+    console.log(req.body)
     user.login(req.body).then(function(result) {
         res.json(result);
     });
@@ -285,7 +294,7 @@ router.post('/buy', function(req, res, next) {
 
 /* GET total number of  books sold */
 router.get('/totalBooksSold', function(req, res, next) {
-    book.totalBooksSold().then(function(result) {
+    book.totalBooksSold(req.query.fromDate || null, req.query.toDate || null, req.query.bookId || null).then(function(result) {
         res.json(result);
     });
 
@@ -307,5 +316,20 @@ router.get('/getAllBooksSoldOfAuthor', function(req, res, next) {
 
 });
 
+/* GET all user details based on order id */
+router.get('/getUserDetailsOnOrder', function(req, res, next) {
+    user.getUserDetailsOnOrder(req.query.order_id).then(function(result) {
+        res.json(result);
+    });
+
+});
+
+/* GET all user details based on books bought */
+router.get('/getUserDetailsOnBook', function(req, res, next) {
+    user.getUserDetailsOnBook(req.query.book_id).then(function(result) {
+        res.json(result);
+    });
+
+});
 
 module.exports = router;

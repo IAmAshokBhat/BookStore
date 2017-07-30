@@ -1,86 +1,28 @@
-var createConnection = require('../utilities/database_connection');
-
+var utilities = require('../utilities/database_connection');
 var author = {};
 
 /* Get all publications*/
 
 author.getAllAuthors = function() {
-    return new Promise(function(resolve, reject) {
-        createConnection(function(err, connection) {
-            var data = [];
-            connection.query("SELECT * FROM author", function(err, result, fields) {
-                if (err) {
-                    console.log(err)
-                    reject(err)
-                }
-                console.log(JSON.parse(JSON.stringify(result)));
-                var response = { data: [], status: 1, message: "" }
-                response.data = JSON.parse(JSON.stringify(result))
-                if (result.length == 0) {
-                    response.message = "No data";
-                } else {
-                    response.message = "Success";
-                }
-                resolve(response);
-            });
-            connection.release();
-        });
-    });
+    var query = "SELECT * FROM author";
+    return utilities.executeQuery(query);
+
 };
 
 /* Get author matching id*/
 
 author.getAuthorWithId = function(id) {
-    return new Promise(function(resolve, reject) {
-        createConnection(function(err, connection) {
-            var data = [];
-            connection.query("SELECT * FROM author where author_id=" + id, function(err, result, fields) {
-                if (err) {
-                    console.log(err)
-                    reject(err)
-                }
-                console.log(JSON.parse(JSON.stringify(result)));
-                var response = { data: [], status: 1, message: "" }
-                response.data = JSON.parse(JSON.stringify(result))
-                if (result.length == 0) {
-                    response.message = "No data";
-                } else {
-                    response.message = "Success";
-                }
-                resolve(response);
-            });
-            connection.release();
-        });
-    });
+    var query = "SELECT * FROM author where author_id=" + id;
+    return utilities.executeQuery(query);
+
 };
 
 /* Get author matching name*/
 
 author.getAuthorWithName = function(name) {
-    return new Promise(function(resolve, reject) {
-        createConnection(function(err, connection) {
-            var data = [];
-            console.log(name)
-            var query = "SELECT * FROM author WHERE  author_name LIKE '" + name + "%'"
-            console.log(query)
-            connection.query(query, function(err, result, fields) {
-                if (err) {
-                    console.log(err)
-                    reject(err)
-                }
-                console.log(JSON.parse(JSON.stringify(result)));
-                var response = { data: [], status: 1, message: "" }
-                response.data = JSON.parse(JSON.stringify(result))
-                if (result.length == 0) {
-                    response.message = "No data";
-                } else {
-                    response.message = "Success";
-                }
-                resolve(response);
-            });
-            connection.release();
-        });
-    });
+    var query = "SELECT * FROM author WHERE  author_name LIKE '" + name + "%'"
+    return utilities.executeQuery(query);
+
 };
 
 
@@ -88,7 +30,7 @@ author.getAuthorWithName = function(name) {
 /* TODO: Take image in formdata and convert to image url and then store*/
 author.insert = function(authors) {
     return new Promise(function(resolve, reject) {
-        createConnection(function(err, connection) {
+        utilities.getConnection(function(err, connection) {
             var data = [];
             var values = "";
             console.log(authors)
@@ -128,7 +70,7 @@ author.insert = function(authors) {
 /* TODO: Take image in formdata and convert to image url and then store*/
 author.update = function(author) {
     return new Promise(function(resolve, reject) {
-        createConnection(function(err, connection) {
+        utilities.getConnection(function(err, connection) {
             var data = [];
             var query = "UPDATE `author` SET author.author_name = '" + author.author_name + "' WHERE author.author_id='" + author.author_id + "'";
             connection.query(query, function(err, result, fields) {
@@ -155,7 +97,7 @@ author.update = function(author) {
 /* Delete a author*/
 author.delete = function(author_id) {
     return new Promise(function(resolve, reject) {
-        createConnection(function(err, connection) {
+        utilities.getConnection(function(err, connection) {
             var data = [];
             var query = "DELETE FROM `author` WHERE `author_id` = '" + author_id + "'";
             connection.query(query, function(err, result, fields) {
@@ -181,35 +123,14 @@ author.delete = function(author_id) {
 
 
 author.getAllBooksSoldOfAuthor = function(id) {
-    return new Promise(function(resolve, reject) {
-        createConnection(function(err, connection) {
-            var data = [];
-            var query = "SELECT b.book_name,  a.author_name,  SUM(order_details.quantity) AS number_of_books " +
-                "FROM `order_details` " +
-                "LEFT JOIN book AS b ON    order_details.book_id = b.book_id " +
-                "LEFT JOIN author AS a ON b.author_id = a.author_id " +
-                "WHERE  a.author_id =" + id +
-                " GROUP BY order_details.book_id";
-            console.log(query)
-            connection.query(query, function(err, result, fields) {
-                if (err) {
-                    console.log(err)
-                    reject(err)
-                }
-                console.log(JSON.parse(JSON.stringify(result)));
-                var response = { data: [], status: 1, message: "" }
-                response.data = JSON.parse(JSON.stringify(result))
-                if (result.length == 0) {
-                    response.message = "No books sold of this author";
-                    response.status = 0;
-                } else {
-                    response.message = "Success";
-                }
-                resolve(response);
-            });
-            connection.release();
-        });
+    var query = "SELECT b.book_name,  a.author_name,  SUM(order_details.quantity) AS number_of_books " +
+        "FROM `order_details` " +
+        "LEFT JOIN book AS b ON    order_details.book_id = b.book_id " +
+        "LEFT JOIN author AS a ON b.author_id = a.author_id " +
+        "WHERE  a.author_id =" + id +
+        " GROUP BY order_details.book_id";
+    return utilities.executeQuery(query);
 
-    });
+
 };
 module.exports = author;

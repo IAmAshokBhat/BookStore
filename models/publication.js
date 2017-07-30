@@ -1,86 +1,28 @@
-var createConnection = require('../utilities/database_connection');
+var utilities = require('../utilities/database_connection');
 
 var publication = {};
 
 /* Get all publications*/
 
 publication.getAllPublications = function() {
-    return new Promise(function(resolve, reject) {
-        createConnection(function(err, connection) {
-            var data = [];
-            connection.query("SELECT * FROM publication", function(err, result, fields) {
-                if (err) {
-                    console.log(err)
-                    reject(err)
-                }
-                console.log(JSON.parse(JSON.stringify(result)));
-                var response = { data: [], status: 1, message: "" }
-                response.data = JSON.parse(JSON.stringify(result))
-                if (result.length == 0) {
-                    response.message = "No data";
-                } else {
-                    response.message = "Success";
-                }
-                resolve(response);
-            });
-            connection.release();
-        });
-    });
+    var query = "SELECT * FROM publication";
+    return utilities.executeQuery(query);
 };
 
 /* Get publication matching id*/
 
 publication.getPublicationWithId = function(id) {
-    return new Promise(function(resolve, reject) {
-        createConnection(function(err, connection) {
-            var data = [];
-            connection.query("SELECT * FROM publication where publication_id=" + id, function(err, result, fields) {
-                if (err) {
-                    console.log(err)
-                    reject(err)
-                }
-                console.log(JSON.parse(JSON.stringify(result)));
-                var response = { data: [], status: 1, message: "" }
-                response.data = JSON.parse(JSON.stringify(result))
-                if (result.length == 0) {
-                    response.message = "No data";
-                } else {
-                    response.message = "Success";
-                }
-                resolve(response);
-            });
-            connection.release();
-        });
-    });
+    var query = "SELECT * FROM publication where publication_id=" + id;
+    return utilities.executeQuery(query);
+
 };
 
 /* Get publication matching name*/
 
 publication.getPublicationWithName = function(name) {
-    return new Promise(function(resolve, reject) {
-        createConnection(function(err, connection) {
-            var data = [];
-            console.log(name)
-            var query = "SELECT * FROM publication WHERE  publication_name LIKE '" + name + "%'"
-            console.log(query)
-            connection.query(query, function(err, result, fields) {
-                if (err) {
-                    console.log(err)
-                    reject(err)
-                }
-                console.log(JSON.parse(JSON.stringify(result)));
-                var response = { data: [], status: 1, message: "" }
-                response.data = JSON.parse(JSON.stringify(result))
-                if (result.length == 0) {
-                    response.message = "No data";
-                } else {
-                    response.message = "Success";
-                }
-                resolve(response);
-            });
-            connection.release();
-        });
-    });
+    var query = "SELECT * FROM publication WHERE  publication_name LIKE '" + name + "%'"
+    return utilities.executeQuery(query);
+
 };
 
 
@@ -88,7 +30,7 @@ publication.getPublicationWithName = function(name) {
 /* TODO: Take image in formdata and convert to image url and then store*/
 publication.insert = function(publications) {
     return new Promise(function(resolve, reject) {
-        createConnection(function(err, connection) {
+        utilities.getConnection(function(err, connection) {
             var data = [];
             var values = "";
             console.log(publications)
@@ -128,7 +70,7 @@ publication.insert = function(publications) {
 /* TODO: Take image in formdata and convert to image url and then store*/
 publication.update = function(publication) {
     return new Promise(function(resolve, reject) {
-        createConnection(function(err, connection) {
+        utilities.getConnection(function(err, connection) {
             var data = [];
             var query = "UPDATE `publication` SET publication.publication_name = '" + publication.publication_name + "' WHERE publication.publication_id='" + publication.publication_id + "'";
             connection.query(query, function(err, result, fields) {
@@ -155,7 +97,7 @@ publication.update = function(publication) {
 /* Delete a publication*/
 publication.delete = function(publication_id) {
     return new Promise(function(resolve, reject) {
-        createConnection(function(err, connection) {
+        utilities.getConnection(function(err, connection) {
             var data = [];
             var query = "DELETE FROM `publication` WHERE `publication_id` = '" + publication_id + "'";
             connection.query(query, function(err, result, fields) {
