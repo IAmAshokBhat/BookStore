@@ -2,9 +2,6 @@
     "name": "bookstore",
     "version": "0.0.0",
     "private": true,
-    "scripts": {
-        "start": "node ./bin/www"
-    },
     "dependencies": {
         "bcrypt": "^1.0.2",
         "body-parser": "~1.17.1",
