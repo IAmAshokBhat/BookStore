@@ -11,8 +11,7 @@ var pool = mysql.createPool({
 });
 var utilities = {}
 utilities.getConnection = function(callback) {
-    console.log("Environment variable");
-    console.log(pool)
+
     pool.getConnection(function(err, connection) {
         callback(err, connection);
     });

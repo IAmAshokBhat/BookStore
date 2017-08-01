@@ -1,4 +1,5 @@
 var utilities = require('../utilities/database_connection');
+var dateFormat = require('dateformat');
 var category = {};
 
 /* Get all publications*/
@@ -119,4 +120,19 @@ category.delete = function(category_id) {
         });
     });
 };
+
+/* Get highest selling category */
+category.getHighestSelling = function(fromDate, toDate) {
+    var query = "SELECT o.order_id,c.category_id, o.book_id, o.date_of_purchase, SUM(o.quantity) as Total, o.payment_method " +
+        "FROM `order_details` as o " +
+        "LEFT JOIN book as b on b.book_id = o.book_id " +
+        "LEFT JOIN category as c on c.category_id = b.book_id " +
+        "GROUP BY c.category_id " +
+        "ORDER BY Total DESC LIMIT 1 ";
+    if (fromDate && toDate) {
+        query += "WHERE `date_of_purchase` BETWEEN '" + dateFormat(fromDate, "yyyy-mm-dd , h:MM:ss ") + "' AND '" + (dateFormat(toDate, "yyyy-mm-dd , h:MM:ss ") || new Date()) + "'";
+    }
+    return utilities.executeQuery(query);
+};
+
 module.exports = category;

@@ -332,4 +332,13 @@ router.get('/getUserDetailsOnBook', function(req, res, next) {
 
 });
 
+
+/* GET Highest selling category */
+router.get('/highestSellingCategory', function(req, res, next) {
+    category.getHighestSelling(req.query.fromDate || null, req.query.toDate || null).then(function(result) {
+        res.json(result);
+    });
+
+});
+
 module.exports = router;
