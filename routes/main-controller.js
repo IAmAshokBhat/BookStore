@@ -52,7 +52,7 @@ router.post('/book', function(req, res, next) {
 });
 
 /* Update book(s) */
-router.post('/book/update', function(req, res, next) {
+router.put('/book', function(req, res, next) {
     console.log(req.body)
     book.update(req.body).then(function(result) {
         res.json(result);
@@ -95,7 +95,7 @@ router.get('/getPublicationWithName', function(req, res, next) {
 });
 
 /* Insert publication(s) */
-router.post('/publications', function(req, res, next) {
+router.post('/publication', function(req, res, next) {
     publication.insert(req.body).then(function(result) {
         res.json(result);
     });
@@ -103,7 +103,7 @@ router.post('/publications', function(req, res, next) {
 });
 
 /* Update publication(s) */
-router.post('/publication/update', function(req, res, next) {
+router.put('/publication', function(req, res, next) {
     publication.update(req.body).then(function(result) {
         res.json(result);
     });
@@ -145,7 +145,7 @@ router.get('/getCategoryWithName', function(req, res, next) {
 });
 
 /* Insert category(s) */
-router.post('/categories', function(req, res, next) {
+router.post('/category', function(req, res, next) {
     category.insert(req.body).then(function(result) {
         res.json(result);
     });
@@ -153,7 +153,7 @@ router.post('/categories', function(req, res, next) {
 });
 
 /* Update category(s) */
-router.post('/category/update', function(req, res, next) {
+router.put('/category', function(req, res, next) {
     category.update(req.body).then(function(result) {
         res.json(result);
     });
@@ -195,7 +195,7 @@ router.get('/getAuthorWithName', function(req, res, next) {
 });
 
 /* Insert author(s) */
-router.post('/authors', function(req, res, next) {
+router.post('/author', function(req, res, next) {
 
     author.insert(req.body).then(function(result) {
         res.json(result);
@@ -204,7 +204,7 @@ router.post('/authors', function(req, res, next) {
 });
 
 /* Update author(s) */
-router.post('/author/update', function(req, res, next) {
+router.put('/author', function(req, res, next) {
     author.update(req.body).then(function(result) {
         res.json(result);
     });
@@ -256,7 +256,7 @@ router.post('/user', function(req, res, next) {
 
 
 /* Update author(s) */
-router.post('/user/update', function(req, res, next) {
+router.put('/user', function(req, res, next) {
     user.update(req.body).then(function(result) {
         res.json(result);
     });

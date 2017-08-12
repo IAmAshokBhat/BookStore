@@ -1,0 +1,1706 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Book Store",
+        "description": "Book Store is an APP built using NodeJS and MYSQL \n"
+    },
+    "host": "",
+    "basePath": "/api",
+    "schemes": [
+        "http"
+    ],
+    "paths": {
+        "/login": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [{
+                    "in": "body",
+                    "name": "body",
+                    "description": "request body parameters need to be added here",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/Login"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "parameters": [{
+                    "in": "header",
+                    "name": "Authorization",
+                    "description": "Bearer followed by auth token recieved after login",
+                    "required": true,
+                    "type": "string",
+                    "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                }],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/getUserWithId": {
+            "get": {
+                "tags": [
+                    "Book"
+                ],
+                "parameters": [{
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Bearer followed by auth token recieved after login",
+                        "required": true,
+                        "type": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+
+                    },
+                    {
+                        "in": "query",
+                        "name": "user_id",
+                        "description": "user_id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/getUserWithName": {
+            "get": {
+                "tags": [
+                    "Book"
+                ],
+                "parameters": [{
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Bearer followed by auth token recieved after login",
+                        "required": true,
+                        "type": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                    },
+                    {
+                        "in": "query",
+                        "name": "user_name",
+                        "description": "Book name starting with",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/user": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [{
+                        "in": "body",
+                        "name": "body",
+                        "description": "request body parameters need to be added here",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization",
+                        "required": true,
+                        "type": "string",
+                        "format": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [{
+                        "in": "body",
+                        "name": "body",
+                        "description": "request body parameters need to be added here",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UpdateUser"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization",
+                        "required": true,
+                        "type": "string",
+                        "format": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [{
+                        "in": "query",
+                        "name": "user_id",
+                        "description": "user_id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization",
+                        "required": true,
+                        "type": "string",
+                        "format": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/books": {
+            "get": {
+                "tags": [
+                    "Book"
+                ],
+                "parameters": [{
+                    "in": "header",
+                    "name": "Authorization",
+                    "description": "Bearer followed by auth token recieved after login",
+                    "required": true,
+                    "type": "string",
+                    "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                }],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/getBookWithId": {
+            "get": {
+                "tags": [
+                    "Book"
+                ],
+                "parameters": [{
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Bearer followed by auth token recieved after login",
+                        "required": true,
+                        "type": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+
+                    },
+                    {
+                        "in": "query",
+                        "name": "bookId",
+                        "description": "bookId",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/getBookWithName": {
+            "get": {
+                "tags": [
+                    "Book"
+                ],
+                "parameters": [{
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Bearer followed by auth token recieved after login",
+                        "required": true,
+                        "type": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                    },
+                    {
+                        "in": "query",
+                        "name": "bookName",
+                        "description": "Book name starting with",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/book": {
+            "post": {
+                "tags": [
+                    "Book"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [{
+                        "in": "body",
+                        "name": "body",
+                        "description": "request body parameters need to be added here",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Book"
+                            }
+
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization",
+                        "required": true,
+                        "type": "string",
+                        "format": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Book"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [{
+                        "in": "body",
+                        "name": "body",
+                        "description": "request body parameters need to be added here",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UpdateBook"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization",
+                        "required": true,
+                        "type": "string",
+                        "format": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Book"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [{
+                        "in": "query",
+                        "name": "bookId",
+                        "description": "bookId",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization",
+                        "required": true,
+                        "type": "string",
+                        "format": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/publications": {
+            "get": {
+                "tags": [
+                    "Publication"
+                ],
+                "parameters": [{
+                    "in": "header",
+                    "name": "Authorization",
+                    "description": "Bearer followed by auth token recieved after login",
+                    "required": true,
+                    "type": "string",
+                    "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                }],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/getPublicationWithId": {
+            "get": {
+                "tags": [
+                    "Publication"
+                ],
+                "parameters": [{
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Bearer followed by auth token recieved after login",
+                        "required": true,
+                        "type": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+
+                    },
+                    {
+                        "in": "query",
+                        "name": "publicationId",
+                        "description": "Publication Id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/getPublicationWithName": {
+            "get": {
+                "tags": [
+                    "Publication"
+                ],
+                "parameters": [{
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Bearer followed by auth token recieved after login",
+                        "required": true,
+                        "type": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                    },
+                    {
+                        "in": "query",
+                        "name": "publicationName",
+                        "description": "Publication name starting with",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/publication": {
+            "post": {
+                "tags": [
+                    "Publication"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [{
+                        "in": "body",
+                        "name": "body",
+                        "description": "request body parameters need to be added here",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Publication"
+                            }
+
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization",
+                        "required": true,
+                        "type": "string",
+                        "format": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Publication"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [{
+                        "in": "body",
+                        "name": "body",
+                        "description": "request body parameters need to be added here",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UpdatePublication"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization",
+                        "required": true,
+                        "type": "string",
+                        "format": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Publication"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [{
+                        "in": "query",
+                        "name": "publication_id",
+                        "description": "publication_id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization",
+                        "required": true,
+                        "type": "string",
+                        "format": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/categories": {
+            "get": {
+                "tags": [
+                    "Category"
+                ],
+                "parameters": [{
+                    "in": "header",
+                    "name": "Authorization",
+                    "description": "Bearer followed by auth token recieved after login",
+                    "required": true,
+                    "type": "string",
+                    "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                }],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/getCategoryWithId": {
+            "get": {
+                "tags": [
+                    "Category"
+                ],
+                "parameters": [{
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Bearer followed by auth token recieved after login",
+                        "required": true,
+                        "type": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+
+                    },
+                    {
+                        "in": "query",
+                        "name": "category_id",
+                        "description": "Category Id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/getCategoryWithName": {
+            "get": {
+                "tags": [
+                    "Category"
+                ],
+                "parameters": [{
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Bearer followed by auth token recieved after login",
+                        "required": true,
+                        "type": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                    },
+                    {
+                        "in": "query",
+                        "name": "category_name",
+                        "description": "Category name starting with",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/category": {
+            "post": {
+                "tags": [
+                    "Category"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [{
+                        "in": "body",
+                        "name": "body",
+                        "description": "request body parameters need to be added here",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Category"
+                            }
+
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization",
+                        "required": true,
+                        "type": "string",
+                        "format": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Category"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [{
+                        "in": "body",
+                        "name": "body",
+                        "description": "request body parameters need to be added here",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UpdateCategory"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization",
+                        "required": true,
+                        "type": "string",
+                        "format": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Category"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [{
+                        "in": "query",
+                        "name": "category_id",
+                        "description": "category_id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization",
+                        "required": true,
+                        "type": "string",
+                        "format": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/authors": {
+            "get": {
+                "tags": [
+                    "Author"
+                ],
+                "parameters": [{
+                    "in": "header",
+                    "name": "Authorization",
+                    "description": "Bearer followed by auth token recieved after login",
+                    "required": true,
+                    "type": "string",
+                    "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                }],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/getAuthorWithId": {
+            "get": {
+                "tags": [
+                    "Author"
+                ],
+                "parameters": [{
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Bearer followed by auth token recieved after login",
+                        "required": true,
+                        "type": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+
+                    },
+                    {
+                        "in": "query",
+                        "name": "author_id",
+                        "description": "Author Id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/getAuthorWithName": {
+            "get": {
+                "tags": [
+                    "Author"
+                ],
+                "parameters": [{
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Bearer followed by auth token recieved after login",
+                        "required": true,
+                        "type": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                    },
+                    {
+                        "in": "query",
+                        "name": "author_name",
+                        "description": "Author name starting with",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/author": {
+            "post": {
+                "tags": [
+                    "Author"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [{
+                        "in": "body",
+                        "name": "body",
+                        "description": "request body parameters need to be added here",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Author"
+                            }
+
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization",
+                        "required": true,
+                        "type": "string",
+                        "format": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Author"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [{
+                        "in": "body",
+                        "name": "body",
+                        "description": "request body parameters need to be added here",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UpdateAuthor"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization",
+                        "required": true,
+                        "type": "string",
+                        "format": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Author"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [{
+                        "in": "query",
+                        "name": "author_id",
+                        "description": "author_id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization",
+                        "required": true,
+                        "type": "string",
+                        "format": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Book": {
+            "type": "object",
+            "required": [
+                "book_name",
+                "price",
+                "yop",
+                "author_id",
+                "publication_id",
+                "category_id"
+            ],
+            "properties": {
+                "book_name": {
+                    "type": "string",
+                    "example": "Book Name"
+                },
+                "description": {
+                    "type": "string",
+                    "example": "Description"
+                },
+                "price": {
+                    "type": "string",
+                    "example": "300"
+                },
+                "yop": {
+                    "type": "string",
+                    "example": "2017"
+                },
+                "author_id": {
+                    "type": "string",
+                    "example": "1"
+                },
+                "publication_id": {
+                    "type": "string",
+                    "example": "1"
+                },
+                "category_id": {
+                    "type": "string",
+                    "example": "1"
+                },
+                "thumb_url": {
+                    "type": "string",
+                    "example": "https://images-eu.ssl-images-amazon.com/images/I/51F2-J1IW-L._AC_US218_FMwebp_QL70_.jpg"
+                }
+            }
+        },
+        "UpdateBook": {
+            "type": "object",
+            "required": [
+                "book_id"
+            ],
+            "properties": {
+                "book_id": {
+                    "type": "string",
+                    "example": "Book Name"
+                },
+                "book_name": {
+                    "type": "string",
+                    "example": "Book Name"
+                },
+                "description": {
+                    "type": "string",
+                    "example": "Description"
+                },
+                "price": {
+                    "type": "string",
+                    "example": "300"
+                },
+                "yop": {
+                    "type": "string",
+                    "example": "2017"
+                },
+                "author_id": {
+                    "type": "string",
+                    "example": "1"
+                },
+                "publication_id": {
+                    "type": "string",
+                    "example": "1"
+                },
+                "category_id": {
+                    "type": "string",
+                    "example": "1"
+                },
+                "thumb_url": {
+                    "type": "string",
+                    "example": "https://images-eu.ssl-images-amazon.com/images/I/51F2-J1IW-L._AC_US218_FMwebp_QL70_.jpg"
+                }
+            }
+        },
+        "Publication": {
+            "type": "object",
+            "required": [
+                "publication_name"
+            ],
+            "properties": {
+                "publication_name": {
+                    "type": "string",
+                    "example": "Publication Name"
+                }
+            }
+        },
+        "UpdatePublication": {
+            "type": "object",
+            "required": [
+                "publication_id", "publication_name"
+            ],
+            "properties": {
+                "publication_id": {
+                    "type": "string",
+                    "example": "Publication id"
+                },
+                "publication_name": {
+                    "type": "string",
+                    "example": "Publication Name"
+                }
+            }
+        },
+        "Category": {
+            "type": "object",
+            "required": [
+                "category_name"
+            ],
+            "properties": {
+                "category_name": {
+                    "type": "string",
+                    "example": "Category Name"
+                }
+            }
+        },
+        "UpdateCategory": {
+            "type": "object",
+            "required": [
+                "category_id", "category_name"
+            ],
+            "properties": {
+                "category_id": {
+                    "type": "string",
+                    "example": "Category id"
+                },
+                "category_name": {
+                    "type": "string",
+                    "example": "Category Name"
+                }
+            }
+        },
+        "Author": {
+            "type": "object",
+            "required": [
+                "author_name"
+            ],
+            "properties": {
+                "author_name": {
+                    "type": "string",
+                    "example": "Author Name"
+                }
+            }
+        },
+        "UpdateAuthor": {
+            "type": "object",
+            "required": [
+                "author_id", "author_name"
+            ],
+            "properties": {
+                "author_id": {
+                    "type": "string",
+                    "example": "Author id"
+                },
+                "author_name": {
+                    "type": "string",
+                    "example": "Author Name"
+                }
+            }
+        },
+        "User": {
+            "type": "object",
+            "required": [
+                "name", "email", "password"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": " Name"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "email "
+                },
+                "password": {
+                    "type": "string",
+                    "example": "password"
+                }
+            }
+        },
+        "UpdateUser": {
+            "type": "object",
+            "required": [
+                "name", "user_id"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": " Name"
+                },
+                "user_id": {
+                    "type": "string",
+                    "example": "user_id"
+                }
+            }
+        },
+        "Login": {
+            "type": "object",
+            "required": [
+                "email",
+                "password"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "email@noemail.com"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "somepassword"
+                }
+            }
+        }
+    }
+}

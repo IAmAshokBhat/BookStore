@@ -8,7 +8,7 @@ book.getAllBooks = function() {
     return new Promise(function(resolve, reject) {
         createConnection(function(err, connection) {
             var data = [];
-            connection.query("SELECT book.book_name, a.author_name, c.category_name , p.publication_name, book.yop, book.description, book.stock , book.price" +
+            connection.query("SELECT book.book_id,book.book_name, a.author_name, c.category_name , p.publication_name, book.yop, book.description, book.stock , book.price" +
                 " FROM `book` " +
                 "LEFT JOIN author as a ON book.author_id = a.author_id " +
                 "LEFT JOIN category as c ON book.category_id = c.category_id " +
@@ -110,7 +110,7 @@ book.insert = function(books) {
             console.log(books)
             for (var index = 0; index < books.length; index++) {
                 var element = books[index];
-                values += " ( '" + (books[index].book_name || "defaultBookName") + "', " + "'" + (books[index].description || "description") + "', " + "'" + (books[index].thumb_url || "https://images-eu.ssl-images-amazon.com/images/I/51F2-J1IW-L._AC_US218_FMwebp_QL70_.jpg") + "', " + "'" + (books[index].price || "100") + "', " + "'" + (books[index].yop || "2017") + "', " + "'" + (books[index].autor_id || "1") + "', " + "'" + (books[index].publication_id || "1") + "', " + "'" + (books[index].category_id || "1") + "'),"
+                values += " ( '" + (books[index].book_name || "defaultBookName") + "', " + "'" + (books[index].description || "description") + "', " + "'" + (books[index].thumb_url || "https://images-eu.ssl-images-amazon.com/images/I/51F2-J1IW-L._AC_US218_FMwebp_QL70_.jpg") + "', " + "'" + (books[index].price || "100") + "', " + "'" + (books[index].yop || "2017") + "', " + "'" + (books[index].author_id || "1") + "', " + "'" + (books[index].publication_id || "1") + "', " + "'" + (books[index].category_id || "1") + "'),"
             }
 
             values = values.slice(0, -1);

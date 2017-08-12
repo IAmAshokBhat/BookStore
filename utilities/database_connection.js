@@ -3,10 +3,10 @@ var mysql = require('mysql');
 
 var pool = mysql.createPool({
     connectionLimit: 100,
-    host: "us-cdbr-iron-east-03.cleardb.net",
-    user: "bf3507d156a390",
-    password: "eaf0f65b",
-    database: "heroku_6cbd6dcc8b88f6a",
+    host: process.env.HEROKU_DB_URL || "us-cdbr-iron-east-03.cleardb.net",
+    user: process.env.HEROKU_DB_USER_NAME || "bf3507d156a390",
+    password: process.env.HEROKU_DB_PASSWORD || "eaf0f65b",
+    database: process.env.HEROKU_DBNAME || "heroku_6cbd6dcc8b88f6a",
     debug: false
 });
 var utilities = {}
@@ -29,10 +29,10 @@ utilities.executeQuery = function(query) {
                     reject(err)
                 }
                 console.log(JSON.parse(JSON.stringify(result)));
-
+                console.log(JSON.parse(JSON.stringify(process.env)));
                 response.data = JSON.parse(JSON.stringify(result))
                 if (result.length == 0) {
-                    response.message = "No users";
+                    response.message = "No records";
                     response.status = 0;
                 } else {
                     response.message = "Success";
