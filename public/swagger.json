@@ -8,7 +8,7 @@
     "host": "",
     "basePath": "/api",
     "schemes": [
-        "https"
+        "http"
     ],
     "paths": {
         "/login": {
@@ -1473,6 +1473,364 @@
                     }
                 }
             }
+        },
+        "/buy": {
+            "post": {
+                "tags": [
+                    "Book"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [{
+                        "in": "body",
+                        "name": "body",
+                        "description": "request body parameters need to be added here",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/OrderDetails"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization",
+                        "required": true,
+                        "type": "string",
+                        "format": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/totalBooksSold": {
+            "get": {
+                "tags": [
+                    "Reports"
+                ],
+                "parameters": [{
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Bearer followed by auth token recieved after login",
+                        "required": false,
+                        "type": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                    },
+                    {
+                        "in": "query",
+                        "name": "fromDate",
+                        "description": "From Date",
+                        "required": false,
+                        "type": "string",
+                        "example": "2017/07/23"
+                    },
+                    {
+                        "in": "query",
+                        "name": "toDate",
+                        "description": "To Date",
+                        "required": false,
+                        "type": "string",
+                        "example": "2017/07/24"
+                    },
+                    {
+                        "in": "query",
+                        "name": "bookId",
+                        "description": "Book Id",
+                        "required": false,
+                        "type": "string",
+                        "example": "8"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/getBooksBoughtByUser": {
+            "get": {
+                "tags": [
+                    "Reports"
+                ],
+                "parameters": [{
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Bearer followed by auth token recieved after login",
+                        "required": true,
+                        "type": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                    },
+                    {
+                        "in": "query",
+                        "name": "user_id",
+                        "description": "User id",
+                        "required": true,
+                        "type": "string",
+                        "example": "1"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/getAllBooksSoldOfAuthor": {
+            "get": {
+                "tags": [
+                    "Reports"
+                ],
+                "parameters": [{
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Bearer followed by auth token recieved after login",
+                        "required": true,
+                        "type": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                    },
+                    {
+                        "in": "query",
+                        "name": "author_id",
+                        "description": "Author id",
+                        "required": true,
+                        "type": "string",
+                        "example": "1"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/getUserDetailsOnOrder": {
+            "get": {
+                "tags": [
+                    "Reports"
+                ],
+                "parameters": [{
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Bearer followed by auth token recieved after login",
+                        "required": true,
+                        "type": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                    },
+                    {
+                        "in": "query",
+                        "name": "order_id",
+                        "description": "Order id",
+                        "required": true,
+                        "type": "string",
+                        "example": "1"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/getUserDetailsOnBook": {
+            "get": {
+                "tags": [
+                    "Reports"
+                ],
+                "parameters": [{
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Bearer followed by auth token recieved after login",
+                        "required": true,
+                        "type": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                    },
+                    {
+                        "in": "query",
+                        "name": "book_id",
+                        "description": "Book id",
+                        "required": true,
+                        "type": "string",
+                        "example": "1"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/highestSellingCategory": {
+            "get": {
+                "tags": [
+                    "Reports"
+                ],
+                "parameters": [{
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Bearer followed by auth token recieved after login",
+                        "required": true,
+                        "type": "string",
+                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
+                    },
+                    {
+                        "in": "query",
+                        "name": "fromDate",
+                        "description": "From Date",
+                        "required": false,
+                        "type": "string",
+                        "example": "2017/07/23"
+                    },
+                    {
+                        "in": "query",
+                        "name": "toDate",
+                        "description": "To Date",
+                        "required": false,
+                        "type": "string",
+                        "example": "2017/07/24"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucess"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Authentication failure"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -1518,6 +1876,28 @@
                 "thumb_url": {
                     "type": "string",
                     "example": "https://images-eu.ssl-images-amazon.com/images/I/51F2-J1IW-L._AC_US218_FMwebp_QL70_.jpg"
+                }
+            }
+        },
+        "OrderDetails": {
+            "type": "object",
+            "required": [
+                "book_id",
+                "quantity",
+                "user_id"
+            ],
+            "properties": {
+                "book_id": {
+                    "type": "string",
+                    "example": "1"
+                },
+                "quantity": {
+                    "type": "string",
+                    "example": "2"
+                },
+                "user_id": {
+                    "type": "string",
+                    "example": "1"
                 }
             }
         },

@@ -124,7 +124,7 @@ category.delete = function(category_id) {
 /* Get highest selling category */
 category.getHighestSelling = function(fromDate, toDate) {
 
-    var query = "SELECT min(o.order_id) , c.category_id  , c.category_name as Name  , o.book_id  , o.date_of_purchase  , SUM(o.quantity) as Total   " +
+    var query = "SELECT o.order_id, c.category_id  , c.category_name as Name  , o.book_id  , o.date_of_purchase  , SUM(o.quantity) as Total   " +
         "FROM `order_details` as o " +
         "LEFT JOIN book as b on b.book_id = o.book_id " +
         "LEFT JOIN category as c on c.category_id = b.book_id " +
