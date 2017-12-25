@@ -33,7 +33,6 @@ publication.insert = function(publications) {
         utilities.getConnection(function(err, connection) {
             var data = [];
             var values = "";
-            console.log(publications)
             for (var index = 0; index < publications.length; index++) {
                 var element = publications[index];
                 if (publications[index].publication_name) {
@@ -42,23 +41,24 @@ publication.insert = function(publications) {
 
             }
             values = values.slice(0, -1);
-            console.log(`Values : ${values}`);
+
             var query = "INSERT INTO `publication`(`publication_name`) VALUES" + values;
-            console.log(query)
+
             connection.query(query, function(err, result, fields) {
                 if (err) {
-                    console.log(err)
-                    reject(err)
-                }
-                console.log(JSON.parse(JSON.stringify(result)));
-                var response = { data: [], status: 1, message: "" }
-                response.data = JSON.parse(JSON.stringify(result))
-                if (result.length == 0) {
-                    response.message = "No data";
+                    var response = { data: [], status: 0, message: "" }
+                    response.message = err;
+                    reject(response)
                 } else {
-                    response.message = "Success";
+                    var response = { data: [], status: 1, message: "" }
+                    if (result.affectedRows != 0) {
+                        response.message = "No data";
+                    } else {
+                        response.message = "Success";
+                    }
+                    resolve(response);
                 }
-                resolve(response);
+
             });
             connection.release();
         });
@@ -75,13 +75,12 @@ publication.update = function(publication) {
             var query = "UPDATE `publication` SET publication.publication_name = '" + publication.publication_name + "' WHERE publication.publication_id='" + publication.publication_id + "'";
             connection.query(query, function(err, result, fields) {
                 if (err) {
-                    console.log(err)
-                    reject(err)
+                    var response = { data: [], status: 0, message: "" }
+                    response.message = err;
+                    reject(response)
                 }
-                console.log(JSON.parse(JSON.stringify(result)));
                 var response = { data: [], status: 1, message: "" }
-                    //response.data = JSON.parse(JSON.stringify(result))
-                if (result.changedRows == 0) {
+                if (result.affectedRows == 0) {
                     response.message = "Failed to update!";
                     response.status = 0
                 } else {
@@ -102,12 +101,12 @@ publication.delete = function(publication_id) {
             var query = "DELETE FROM `publication` WHERE `publication_id` = '" + publication_id + "'";
             connection.query(query, function(err, result, fields) {
                 if (err) {
-                    console.log(err)
-                    reject(err)
+                    var response = { data: [], status: 0, message: "" }
+                    response.message = err;
+                    reject(response)
                 }
-                console.log(JSON.parse(JSON.stringify(result)));
+
                 var response = { data: [], status: 1, message: "" }
-                    //response.data = JSON.parse(JSON.stringify(result))
                 if (result.affectedRows == 0) {
                     response.message = "Failed to delete!";
                     response.status = 0

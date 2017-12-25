@@ -33,33 +33,42 @@ author.insert = function(authors) {
         utilities.getConnection(function(err, connection) {
             var data = [];
             var values = "";
-            console.log(authors)
             for (var index = 0; index < authors.length; index++) {
                 var element = authors[index];
                 if (authors[index].author_name) {
                     values += " ( '" + authors[index].author_name + "'),"
+                } else {
+                    reject({ "message": "Invalid Key in request", "status": 0 });
                 }
 
             }
             values = values.slice(0, -1);
-            console.log(`Values : ${values}`);
             var query = "INSERT INTO `author`(`author_name`) VALUES" + values;
-            console.log(query)
-            connection.query(query, function(err, result, fields) {
-                if (err) {
-                    console.log(err)
-                    reject(err)
-                }
-                console.log(JSON.parse(JSON.stringify(result)));
-                var response = { data: [], status: 1, message: "" }
-                response.data = JSON.parse(JSON.stringify(result))
-                if (result.length == 0) {
-                    response.message = "No data";
-                } else {
-                    response.message = "Success";
-                }
-                resolve(response);
-            });
+            try {
+                connection.query(query, function(err, result, fields) {
+                    if (err) {
+
+                        var response = { data: [], status: 0, message: "" }
+                        response.message = err;
+                        reject(response)
+                    } else {
+                        var response = { data: [], status: 1, message: "" }
+
+                        // response.data = JSON.parse(JSON.stringify(result))
+                        if (result.affectedRows != 0) {
+                            response.message = "No data";
+                        } else {
+                            response.message = "Success";
+                        }
+                        resolve(response);
+                    }
+
+                });
+            } catch (error) {
+
+                reject(error)
+            }
+
             connection.release();
         });
     });
@@ -75,13 +84,14 @@ author.update = function(author) {
             var query = "UPDATE `author` SET author.author_name = '" + author.author_name + "' WHERE author.author_id='" + author.author_id + "'";
             connection.query(query, function(err, result, fields) {
                 if (err) {
-                    console.log(err)
-                    reject(err)
+                    var response = { data: [], status: 0, message: "" }
+                    response.message = err;
+                    reject(response)
                 }
-                console.log(JSON.parse(JSON.stringify(result)));
+                //   console.log(JSON.parse(JSON.stringify(result)));
                 var response = { data: [], status: 1, message: "" }
-                    //response.data = JSON.parse(JSON.stringify(result))
-                if (result.changedRows == 0) {
+                response.data = JSON.parse(JSON.stringify(result));
+                if (result.affectedRows == 0) {
                     response.message = "Failed to update!";
                     response.status = 0
                 } else {
@@ -102,12 +112,13 @@ author.delete = function(author_id) {
             var query = "DELETE FROM `author` WHERE `author_id` = '" + author_id + "'";
             connection.query(query, function(err, result, fields) {
                 if (err) {
-                    console.log(err)
-                    reject(err)
+                    var response = { data: [], status: 0, message: "" }
+                    response.message = err;
+                    reject(response)
                 }
-                console.log(JSON.parse(JSON.stringify(result)));
+                //  console.log(JSON.parse(JSON.stringify(result)));
                 var response = { data: [], status: 1, message: "" }
-                    //response.data = JSON.parse(JSON.stringify(result))
+                response.data = JSON.parse(JSON.stringify(result))
                 if (result.affectedRows == 0) {
                     response.message = "Failed to delete!";
                     response.status = 0

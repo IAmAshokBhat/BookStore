@@ -8,7 +8,7 @@
     "host": "",
     "basePath": "/api",
     "schemes": [
-        "https"
+        "http", "https"
     ],
     "paths": {
         "/login": {
@@ -16,6 +16,7 @@
                 "tags": [
                     "User"
                 ],
+                "summary": "Returns access token on successful login",
                 "consumes": [
                     "application/json"
                 ],
@@ -58,6 +59,7 @@
                 "tags": [
                     "User"
                 ],
+                "summary": "Returns list of all users",
                 "parameters": [{
                     "in": "header",
                     "name": "Authorization",
@@ -96,6 +98,7 @@
                 "tags": [
                     "Book"
                 ],
+                "summary": "Returns user with matching id ",
                 "parameters": [{
                         "in": "header",
                         "name": "Authorization",
@@ -143,6 +146,7 @@
                 "tags": [
                     "Book"
                 ],
+                "summary": "Returns user with matching name ",
                 "parameters": [{
                         "in": "header",
                         "name": "Authorization",
@@ -189,6 +193,7 @@
                 "tags": [
                     "User"
                 ],
+                "summary": "Add a new user ",
                 "consumes": [
                     "application/json"
                 ],
@@ -239,6 +244,7 @@
                 "tags": [
                     "User"
                 ],
+                "summary": "Update a user ",
                 "consumes": [
                     "application/json"
                 ],
@@ -289,6 +295,7 @@
                 "tags": [
                     "User"
                 ],
+                "summary": "Delete a user ",
                 "consumes": [
                     "application/json"
                 ],
@@ -339,6 +346,7 @@
                 "tags": [
                     "Book"
                 ],
+                "summary": "Returns list of all books",
                 "parameters": [{
                     "in": "header",
                     "name": "Authorization",
@@ -377,6 +385,7 @@
                 "tags": [
                     "Book"
                 ],
+                "summary": "Returns book with matching id ",
                 "parameters": [{
                         "in": "header",
                         "name": "Authorization",
@@ -424,6 +433,7 @@
                 "tags": [
                     "Book"
                 ],
+                "summary": "Returns book with matching name ",
                 "parameters": [{
                         "in": "header",
                         "name": "Authorization",
@@ -470,6 +480,7 @@
                 "tags": [
                     "Book"
                 ],
+                "summary": "Add  books ",
                 "consumes": [
                     "application/json"
                 ],
@@ -524,6 +535,7 @@
                 "tags": [
                     "Book"
                 ],
+                "summary": "Update a book ",
                 "consumes": [
                     "application/json"
                 ],
@@ -574,6 +586,7 @@
                 "tags": [
                     "Book"
                 ],
+                "summary": "Delete a book ",
                 "consumes": [
                     "application/json"
                 ],
@@ -624,6 +637,7 @@
                 "tags": [
                     "Publication"
                 ],
+                "summary": "Returns list of all publications ",
                 "parameters": [{
                     "in": "header",
                     "name": "Authorization",
@@ -662,6 +676,7 @@
                 "tags": [
                     "Publication"
                 ],
+                "summary": "Returns publication with matching id ",
                 "parameters": [{
                         "in": "header",
                         "name": "Authorization",
@@ -709,6 +724,7 @@
                 "tags": [
                     "Publication"
                 ],
+                "summary": "Returns publications with matching name ",
                 "parameters": [{
                         "in": "header",
                         "name": "Authorization",
@@ -755,6 +771,7 @@
                 "tags": [
                     "Publication"
                 ],
+                "summary": "Add publications ",
                 "consumes": [
                     "application/json"
                 ],
@@ -809,6 +826,7 @@
                 "tags": [
                     "Publication"
                 ],
+                "summary": "Update a publication ",
                 "consumes": [
                     "application/json"
                 ],
@@ -859,6 +877,7 @@
                 "tags": [
                     "Publication"
                 ],
+                "summary": "Delete a publication ",
                 "consumes": [
                     "application/json"
                 ],

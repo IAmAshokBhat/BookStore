@@ -28,8 +28,8 @@ utilities.executeQuery = function(query) {
                     console.log(err)
                     reject(err)
                 }
-                console.log(JSON.parse(JSON.stringify(result)));
-                console.log(JSON.parse(JSON.stringify(process.env)));
+                // console.log(JSON.parse(JSON.stringify(result)));
+                // console.log(JSON.parse(JSON.stringify(process.env)));
                 response.data = JSON.parse(JSON.stringify(result))
                 if (result.length == 0) {
                     response.message = "No records";

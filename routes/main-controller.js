@@ -98,6 +98,9 @@ router.get('/getPublicationWithName', function(req, res, next) {
 router.post('/publication', function(req, res, next) {
     publication.insert(req.body).then(function(result) {
         res.json(result);
+    }, function(result) {
+        res.status(400);
+        res.json(result);
     });
 
 });
@@ -106,6 +109,9 @@ router.post('/publication', function(req, res, next) {
 router.put('/publication', function(req, res, next) {
     publication.update(req.body).then(function(result) {
         res.json(result);
+    }, function(result) {
+        res.status(400);
+        res.json(result);
     });
 
 });
@@ -113,6 +119,9 @@ router.put('/publication', function(req, res, next) {
 /* Delete publication */
 router.delete('/publication', function(req, res, next) {
     publication.delete(req.query.publication_id).then(function(result) {
+        res.json(result);
+    }, function(result) {
+        res.status(400);
         res.json(result);
     });
 
@@ -124,6 +133,9 @@ router.delete('/publication', function(req, res, next) {
 router.get('/categories', function(req, res, next) {
     category.getAllCategories().then(function(result) {
         res.json(result);
+    }, function(result) {
+        res.status(400);
+        res.json(result);
     });
 
 });
@@ -131,6 +143,9 @@ router.get('/categories', function(req, res, next) {
 /* GET category with id. */
 router.get('/getCategoryWithId', function(req, res, next) {
     category.getCategoryWithId(req.query.category_id).then(function(result) {
+        res.json(result);
+    }, function(result) {
+        res.status(400);
         res.json(result);
     });
 
@@ -140,6 +155,9 @@ router.get('/getCategoryWithId', function(req, res, next) {
 router.get('/getCategoryWithName', function(req, res, next) {
     category.getCategoryWithName(req.query.category_name).then(function(result) {
         res.json(result);
+    }, function(result) {
+        res.status(400);
+        res.json(result);
     });
 
 });
@@ -147,6 +165,9 @@ router.get('/getCategoryWithName', function(req, res, next) {
 /* Insert category(s) */
 router.post('/category', function(req, res, next) {
     category.insert(req.body).then(function(result) {
+        res.json(result);
+    }, function(result) {
+        res.status(400);
         res.json(result);
     });
 
@@ -156,6 +177,9 @@ router.post('/category', function(req, res, next) {
 router.put('/category', function(req, res, next) {
     category.update(req.body).then(function(result) {
         res.json(result);
+    }, function(result) {
+        res.status(400);
+        res.json(result);
     });
 
 });
@@ -163,6 +187,9 @@ router.put('/category', function(req, res, next) {
 /* Delete category */
 router.delete('/category', function(req, res, next) {
     category.delete(req.query.category_id).then(function(result) {
+        res.json(result);
+    }, function(result) {
+        res.status(400);
         res.json(result);
     });
 
@@ -174,6 +201,9 @@ router.delete('/category', function(req, res, next) {
 router.get('/authors', function(req, res, next) {
     author.getAllAuthors().then(function(result) {
         res.json(result);
+    }, function(result) {
+        res.status(400);
+        res.json(result);
     });
 
 });
@@ -182,6 +212,9 @@ router.get('/authors', function(req, res, next) {
 router.get('/getAuthorWithId', function(req, res, next) {
     author.getAuthorWithId(req.query.author_id).then(function(result) {
         res.json(result);
+    }, function(result) {
+        res.status(400);
+        res.json(result);
     });
 
 });
@@ -189,6 +222,9 @@ router.get('/getAuthorWithId', function(req, res, next) {
 /* GET author with name */
 router.get('/getAuthorWithName', function(req, res, next) {
     author.getAuthorWithName(req.query.author_name).then(function(result) {
+        res.json(result);
+    }, function(result) {
+        res.status(400);
         res.json(result);
     });
 
@@ -199,13 +235,19 @@ router.post('/author', function(req, res, next) {
 
     author.insert(req.body).then(function(result) {
         res.json(result);
-    });
+    }, function(result) {
+        res.status(400);
+        res.json(result);
+    })
 
 });
 
 /* Update author(s) */
 router.put('/author', function(req, res, next) {
     author.update(req.body).then(function(result) {
+        res.json(result);
+    }, function(result) {
+        res.status(400);
         res.json(result);
     });
 
@@ -214,6 +256,9 @@ router.put('/author', function(req, res, next) {
 /* Delete author */
 router.delete('/author', function(req, res, next) {
     author.delete(req.query.author_id).then(function(result) {
+        res.json(result);
+    }, function(result) {
+        res.status(400);
         res.json(result);
     });
 
@@ -225,6 +270,9 @@ router.delete('/author', function(req, res, next) {
 router.get('/users', function(req, res, next) {
     user.getAllUsers().then(function(result) {
         res.json(result);
+    }, function(result) {
+        res.status(400);
+        res.json(result);
     });
 
 });
@@ -233,6 +281,9 @@ router.get('/users', function(req, res, next) {
 router.get('/getUserWithId', function(req, res, next) {
     user.getUserWithId(req.query.user_id).then(function(result) {
         res.json(result);
+    }, function(result) {
+        res.status(400);
+        res.json(result);
     });
 
 });
@@ -240,6 +291,9 @@ router.get('/getUserWithId', function(req, res, next) {
 /* GET user with name */
 router.get('/getUserWithName', function(req, res, next) {
     user.getUserWithName(req.query.user_name).then(function(result) {
+        res.json(result);
+    }, function(result) {
+        res.status(400);
         res.json(result);
     });
 
@@ -250,6 +304,9 @@ router.post('/user', function(req, res, next) {
 
     user.insert(req.body).then(function(result) {
         res.json(result);
+    }, function(result) {
+        res.status(400);
+        res.json(result);
     });
 
 });
@@ -259,6 +316,9 @@ router.post('/user', function(req, res, next) {
 router.put('/user', function(req, res, next) {
     user.update(req.body).then(function(result) {
         res.json(result);
+    }, function(result) {
+        res.status(400);
+        res.json(result);
     });
 
 });
@@ -266,6 +326,9 @@ router.put('/user', function(req, res, next) {
 /* Delete author */
 router.delete('/user', function(req, res, next) {
     user.delete(req.query.user_id).then(function(result) {
+        res.json(result);
+    }, function(result) {
+        res.status(400);
         res.json(result);
     });
 
@@ -275,6 +338,9 @@ router.delete('/user', function(req, res, next) {
 router.post('/login', function(req, res, next) {
     console.log(req.body)
     user.login(req.body).then(function(result) {
+        res.json(result);
+    }, function(result) {
+        res.status(400);
         res.json(result);
     });
 
@@ -296,6 +362,9 @@ router.post('/buy', function(req, res, next) {
 router.get('/totalBooksSold', function(req, res, next) {
     book.totalBooksSold(req.query.fromDate || null, req.query.toDate || null, req.query.bookId || null).then(function(result) {
         res.json(result);
+    }, function(result) {
+        res.status(400);
+        res.json(result);
     });
 
 });
@@ -303,6 +372,9 @@ router.get('/totalBooksSold', function(req, res, next) {
 /* GET books bought by a user */
 router.get('/getBooksBoughtByUser', function(req, res, next) {
     user.getAllBooksBought(req.query.user_id).then(function(result) {
+        res.json(result);
+    }, function(result) {
+        res.status(400);
         res.json(result);
     });
 
@@ -312,6 +384,9 @@ router.get('/getBooksBoughtByUser', function(req, res, next) {
 router.get('/getAllBooksSoldOfAuthor', function(req, res, next) {
     author.getAllBooksSoldOfAuthor(req.query.author_id).then(function(result) {
         res.json(result);
+    }, function(result) {
+        res.status(400);
+        res.json(result);
     });
 
 });
@@ -319,6 +394,9 @@ router.get('/getAllBooksSoldOfAuthor', function(req, res, next) {
 /* GET all user details based on order id */
 router.get('/getUserDetailsOnOrder', function(req, res, next) {
     user.getUserDetailsOnOrder(req.query.order_id).then(function(result) {
+        res.json(result);
+    }, function(result) {
+        res.status(400);
         res.json(result);
     });
 
@@ -328,6 +406,9 @@ router.get('/getUserDetailsOnOrder', function(req, res, next) {
 router.get('/getUserDetailsOnBook', function(req, res, next) {
     user.getUserDetailsOnBook(req.query.book_id).then(function(result) {
         res.json(result);
+    }, function(result) {
+        res.status(400);
+        res.json(result);
     });
 
 });
@@ -336,6 +417,9 @@ router.get('/getUserDetailsOnBook', function(req, res, next) {
 /* GET Highest selling category */
 router.get('/highestSellingCategory', function(req, res, next) {
     category.getHighestSelling(req.query.fromDate || null, req.query.toDate || null).then(function(result) {
+        res.json(result);
+    }, function(result) {
+        res.status(400);
         res.json(result);
     });
 

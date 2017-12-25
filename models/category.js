@@ -33,7 +33,6 @@ category.insert = function(categories) {
         utilities.getConnection(function(err, connection) {
             var data = [];
             var values = "";
-            console.log(categories)
             for (var index = 0; index < categories.length; index++) {
                 var element = categories[index];
                 if (categories[index].category_name) {
@@ -42,23 +41,21 @@ category.insert = function(categories) {
 
             }
             values = values.slice(0, -1);
-            console.log(`Values : ${values}`);
             var query = "INSERT INTO `category`(`category_name`) VALUES" + values;
-            console.log(query)
             connection.query(query, function(err, result, fields) {
                 if (err) {
-                    console.log(err)
-                    reject(err)
-                }
-                console.log(JSON.parse(JSON.stringify(result)));
-                var response = { data: [], status: 1, message: "" }
-                response.data = JSON.parse(JSON.stringify(result))
-                if (result.length == 0) {
-                    response.message = "No data";
+                    var response = { data: [], status: 0, message: "" }
+                    response.message = err;
+                    reject(response)
                 } else {
-                    response.message = "Success";
+                    var response = { data: [], status: 1, message: "" }
+                    if (result.affectedRows != 0) {
+                        response.message = "No data";
+                    } else {
+                        response.message = "Success";
+                    }
+                    resolve(response);
                 }
-                resolve(response);
             });
             connection.release();
         });
@@ -75,13 +72,13 @@ category.update = function(category) {
             var query = "UPDATE `category` SET category.category_name = '" + category.category_name + "' WHERE category.category_id='" + category.category_id + "'";
             connection.query(query, function(err, result, fields) {
                 if (err) {
-                    console.log(err)
-                    reject(err)
+                    var response = { data: [], status: 0, message: "" }
+                    response.message = err;
+                    reject(response)
                 }
-                console.log(JSON.parse(JSON.stringify(result)));
                 var response = { data: [], status: 1, message: "" }
                     //response.data = JSON.parse(JSON.stringify(result))
-                if (result.changedRows == 0) {
+                if (result.affectedRows == 0) {
                     response.message = "Failed to update!";
                     response.status = 0
                 } else {
@@ -102,10 +99,10 @@ category.delete = function(category_id) {
             var query = "DELETE FROM `category` WHERE `category_id` = '" + category_id + "'";
             connection.query(query, function(err, result, fields) {
                 if (err) {
-                    console.log(err)
-                    reject(err)
+                    var response = { data: [], status: 0, message: "" }
+                    response.message = err;
+                    reject(response)
                 }
-                console.log(JSON.parse(JSON.stringify(result)));
                 var response = { data: [], status: 1, message: "" }
                     //response.data = JSON.parse(JSON.stringify(result))
                 if (result.affectedRows == 0) {

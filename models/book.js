@@ -15,10 +15,11 @@ book.getAllBooks = function() {
                 "LEFT JOIN publication as p ON book.publication_id = p.publication_id ",
                 function(err, result, fields) {
                     if (err) {
-                        console.log(err)
-                        reject(err)
+                        var response = { data: [], status: 0, message: "" }
+                        response.message = err;
+                        reject(response)
                     }
-                    console.log(JSON.parse(JSON.stringify(result)));
+
                     var response = { data: [], status: 1, message: "" }
                     response.data = JSON.parse(JSON.stringify(result))
                     if (result.length == 0) {
@@ -47,10 +48,11 @@ book.getBookWithId = function(id) {
                 "WHERE book_id=" + id,
                 function(err, result, fields) {
                     if (err) {
-                        console.log(err)
-                        reject(err)
+                        var response = { data: [], status: 0, message: "" }
+                        response.message = err;
+                        reject(response)
                     }
-                    console.log(JSON.parse(JSON.stringify(result)));
+
                     var response = { data: [], status: 1, message: "" }
                     response.data = JSON.parse(JSON.stringify(result))
                     if (result.length == 0) {
@@ -71,20 +73,18 @@ book.getBookWithName = function(name) {
     return new Promise(function(resolve, reject) {
         createConnection(function(err, connection) {
             var data = [];
-            console.log(name)
             var query = "SELECT book.book_name, a.author_name, c.category_name , p.publication_name, book.yop, book.description, book.stock , book.price" +
                 " FROM `book` " +
                 "LEFT JOIN author as a ON book.author_id = a.author_id " +
                 "LEFT JOIN category as c ON book.category_id = c.category_id " +
                 "LEFT JOIN publication as p ON book.publication_id = p.publication_id " +
                 "WHERE book_name LIKE '" + name + "%'"
-            console.log(query)
             connection.query(query, function(err, result, fields) {
                 if (err) {
-                    console.log(err)
-                    reject(err)
+                    var response = { data: [], status: 0, message: "" }
+                    response.message = err;
+                    reject(response)
                 }
-                console.log(JSON.parse(JSON.stringify(result)));
                 var response = { data: [], status: 1, message: "" }
                 response.data = JSON.parse(JSON.stringify(result))
                 if (result.length == 0) {
@@ -107,30 +107,28 @@ book.insert = function(books) {
         createConnection(function(err, connection) {
             var data = [];
             var values = "";
-            console.log(books)
             for (var index = 0; index < books.length; index++) {
                 var element = books[index];
                 values += " ( '" + (books[index].book_name || "defaultBookName") + "', " + "'" + (books[index].description || "description") + "', " + "'" + (books[index].thumb_url || "https://images-eu.ssl-images-amazon.com/images/I/51F2-J1IW-L._AC_US218_FMwebp_QL70_.jpg") + "', " + "'" + (books[index].price || "100") + "', " + "'" + (books[index].yop || "2017") + "', " + "'" + (books[index].author_id || "1") + "', " + "'" + (books[index].publication_id || "1") + "', " + "'" + (books[index].category_id || "1") + "'),"
             }
 
             values = values.slice(0, -1);
-            console.log(`Values : ${values}`);
             var query = "INSERT INTO `book`(`book_name`, `description`, `thumb_url`, `price`, `yop`, `author_id`, `publication_id`, `category_id`) VALUES" + values;
-            console.log(query)
+
             connection.query(query, function(err, result, fields) {
                 if (err) {
-                    console.log(err)
-                    reject(err)
-                }
-                console.log(JSON.parse(JSON.stringify(result)));
-                var response = { data: [], status: 1, message: "" }
-                response.data = JSON.parse(JSON.stringify(result))
-                if (result.length == 0) {
-                    response.message = "No data";
+                    var response = { data: [], status: 0, message: "" }
+                    response.message = err;
+                    reject(response)
                 } else {
-                    response.message = "Success";
+                    var response = { data: [], status: 1, message: "" }
+                    if (result.affectedRows != 0) {
+                        response.message = "No data";
+                    } else {
+                        response.message = "Success";
+                    }
+                    resolve(response);
                 }
-                resolve(response);
             });
             connection.release();
         });
@@ -154,13 +152,14 @@ book.update = function(book) {
 
             connection.query(query, function(err, result, fields) {
                 if (err) {
-                    console.log(err)
-                    reject(err)
+                    var response = { data: [], status: 0, message: "" }
+                    response.message = err;
+                    reject(response)
                 }
-                console.log(JSON.parse(JSON.stringify(result)));
+
                 var response = { data: [], status: 1, message: "" }
                     //response.data = JSON.parse(JSON.stringify(result))
-                if (result.changedRows == 0) {
+                if (result.affectedRows == 0) {
                     response.message = "Failed to update!";
                     response.status = 0
                 } else {
@@ -181,10 +180,11 @@ book.delete = function(book_id) {
             var query = "DELETE FROM `book` WHERE `book_id` = '" + book_id + "'";
             connection.query(query, function(err, result, fields) {
                 if (err) {
-                    console.log(err)
-                    reject(err)
+                    var response = { data: [], status: 0, message: "" }
+                    response.message = err;
+                    reject(response)
                 }
-                console.log(JSON.parse(JSON.stringify(result)));
+
                 var response = { data: [], status: 1, message: "" }
                     //response.data = JSON.parse(JSON.stringify(result))
                 if (result.affectedRows == 0) {
@@ -207,10 +207,11 @@ var checkStock = function(book_id, quantity) {
             var query = "SELECT book.stock FROM `book` WHERE `book_id` = '" + book_id + "' LIMIT 1";
             connection.query(query, function(err, result, fields) {
                 if (err) {
-                    console.log(err)
-                    reject(err)
+                    var response = { data: [], status: 0, message: "" }
+                    response.message = err;
+                    reject(response)
                 }
-                console.log(JSON.parse(JSON.stringify(result)));
+
                 var response = false;
                 if (result.length == 0) {
                     response = false;
@@ -242,8 +243,9 @@ var reduceStock = function(book_id, quantity) {
             var query = "UPDATE book SET `stock` = stock - " + quantity + " WHERE `book_id` = '" + book_id + "' LIMIT 1";
             connection.query(query, function(err, result, fields) {
                 if (err) {
-                    console.log(err)
-                    reject(err)
+                    var response = { data: [], status: 0, message: "" }
+                    response.message = err;
+                    reject(response)
                 }
                 var response;
                 if (result.length == 0) {
@@ -277,7 +279,7 @@ book.buy = function(orderDetails) {
                                 if (paymentStatus) {
                                     var values = " ( '" + orderDetails.user_id + "', " + "'" + orderDetails.book_id + "', " + "'" + orderDetails.quantity + "', 'NB' )";
                                     var query = "INSERT INTO `order_details`(`user_id`, `book_id`, `quantity`, `payment_method`) VALUES" + values;
-                                    console.log(query)
+
                                     connection.query(query, function(err, result, fields) {
                                         if (err) {
                                             console.log("Yes there is an error")
@@ -342,11 +344,12 @@ book.totalBooksSold = function(fromDate, toDate, bookId) {
             if (bookId) {
                 query += " AND book_id = '" + bookId + "'";
             }
-            console.log(query)
+
             connection.query(query, function(err, result, fields) {
                 if (err) {
-                    console.log(err)
-                    reject(err)
+                    var response = { data: [], status: 0, message: "" }
+                    response.message = err;
+                    reject(response)
                 }
 
                 var response = { data: [], status: 1, message: "" }
