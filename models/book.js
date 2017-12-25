@@ -8,7 +8,7 @@ book.getAllBooks = function() {
     return new Promise(function(resolve, reject) {
         createConnection(function(err, connection) {
             var data = [];
-            connection.query("SELECT book.book_id,book.book_name, a.author_name, c.category_name , p.publication_name, book.yop, book.description, book.stock , book.price" +
+            connection.query("SELECT book.book_id,book.book_name, a.author_name, c.category_name , p.publication_name, book.yop, book.description, book.stock , book.price, book.thumb_url" +
                 " FROM `book` " +
                 "LEFT JOIN author as a ON book.author_id = a.author_id " +
                 "LEFT JOIN category as c ON book.category_id = c.category_id " +
