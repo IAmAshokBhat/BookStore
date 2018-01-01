@@ -110,8 +110,8 @@ book.insert = function(books) {
             for (var index = 0; index < books.length; index++) {
                 var element = books[index];
                 desc = mysql_real_escape_string(books[index].description);
-
-                values +=`  ( '${books[index].book_name}' , '${desc}' ,  '${books[index].thumb_url}' ,'${books[index].price}','${books[index].yop}','${books[index].author_id}','${books[index].publication_id}','${books[index].category_id}'),` 
+                name = mysql_real_escape_string(books[index].book_name)
+                values +=`  ( '${name}' , '${desc}' ,  '${books[index].thumb_url}' ,'${books[index].price}','${books[index].yop}','${books[index].author_id}','${books[index].publication_id}','${books[index].category_id}'),` 
             }
 
             values = values.slice(0, -1);
