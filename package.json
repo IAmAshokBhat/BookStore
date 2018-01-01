@@ -20,7 +20,8 @@
         "serve-favicon": "~2.4.2",
         "envs": "^0.1.6",
         "mysql": "^2.13.0",
-        "randomstring": "^1.1.5"
+        "randomstring": "^1.1.5",
+        "knox": "^0.9.2"
     },
     "devDependencies": {
         "chai": "^4.1.1",

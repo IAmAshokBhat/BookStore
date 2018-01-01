@@ -1,7 +1,12 @@
 var createConnection = require('../utilities/database_connection').getConnection;
 var dateFormat = require('dateformat');
 var book = {};
-
+var knox = require('knox');
+var s3Client = knox.createClient({
+    key:  process.env.AWS_ACCESS_KEY,
+    secret: process.env.AWS_SECRET_KEY,
+    bucket: process.env.S3_BUCKET
+});
 /* Get all books*/
 
 book.getAllBooks = function() {
@@ -113,7 +118,18 @@ book.insert = function(books) {
                 name = mysql_real_escape_string(books[index].book_name)
                 values +=`  ( '${name}' , '${desc}' ,  '${books[index].thumb_url}' ,'${books[index].price}','${books[index].yop}','${books[index].author_id}','${books[index].publication_id}','${books[index].category_id}'),` 
             }
-
+            // saveToS3(req.files.avatar.path, filename, req.files.avatar.name).then(function(s3Url) {
+            //     userToInsert.avatar = {};
+            //     userToInsert.avatar.url = s3Url;
+            //     userToInsert.avatar.secure_url = s3Url;
+            //     userToInsert.avatar.public_id = req.files.avatar.name;
+            //     userToInsert.image_url = s3Url;
+            //     callback();
+            // },function(err){
+            //     console.log("failed adding image to s3");
+            //     console.log(err);
+                
+            // });
             values = values.slice(0, -1);
             var query = `INSERT INTO book(book_name, description, thumb_url, price, yop, author_id, publication_id, category_id) VALUES ${values}`; 
             console.log("Query")
@@ -397,4 +413,22 @@ book.totalBooksSold = function(fromDate, toDate, bookId) {
     });
 };
 
+var saveToS3 = function(path, fileName, name){
+    return new Promise(function(resolve,reject){
+        s3Client.putFile(path,fileName,{ 'x-amz-acl': 'public-read' }, function(err, s3Response){
+            // Always either do something with `res` or at least call `res.resume()`.
+            if (err) {
+                console.log("Err saving image");
+                console.log(err)
+                reject(err)
+              }else{
+                  if(s3Response.statusCode == 200){
+                    var fileurl= process.env.CLOUDFRONT_URL + name;
+                    resolve(fileurl);
+                  }
+              }
+              
+          });
+    });
+};
 module.exports = book;
