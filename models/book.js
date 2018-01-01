@@ -109,11 +109,11 @@ book.insert = function(books) {
             var values = "";
             for (var index = 0; index < books.length; index++) {
                 var element = books[index];
-                values += " ( '" + (books[index].book_name || "defaultBookName") + "', " + "'" + (books[index].description || "description") + "', " + "'" + (books[index].thumb_url || "https://images-eu.ssl-images-amazon.com/images/I/51F2-J1IW-L._AC_US218_FMwebp_QL70_.jpg") + "', " + "'" + (books[index].price || "100") + "', " + "'" + (books[index].yop || "2017") + "', " + "'" + (books[index].author_id || "1") + "', " + "'" + (books[index].publication_id || "1") + "', " + "'" + (books[index].category_id || "1") + "'),"
+                values += ` ( ${books[index].book_name} , ${books[index].description} ,  ${books[index].thumb_url} ,${books[index].price},${books[index].yop},${books[index].autor_id},${books[index].publication_id},${books[index].category_id}),` 
             }
 
             values = values.slice(0, -1);
-            var query = "INSERT INTO `book`(`book_name`, `description`, `thumb_url`, `price`, `yop`, `author_id`, `publication_id`, `category_id`) VALUES" + values;
+            var query = `INSERT INTO book(book_name, description, thumb_url, price, yop, author_id, publication_id, category_id) VALUES ${values}`; 
 
             connection.query(query, function(err, result, fields) {
                 if (err) {
