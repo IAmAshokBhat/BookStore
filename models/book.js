@@ -109,7 +109,9 @@ book.insert = function(books) {
             var values = "";
             for (var index = 0; index < books.length; index++) {
                 var element = books[index];
-                values += ` ( '${books[index].book_name}' , '${books[index].description}' ,  '${books[index].thumb_url}' ,'${books[index].price}','${books[index].yop}','${books[index].author_id}','${books[index].publication_id}','${books[index].category_id}'),` 
+                desc = mysql_real_escape_string(books[index].description);
+
+                values +=`  ( '${books[index].book_name}' , '${desc}' ,  '${books[index].thumb_url}' ,'${books[index].price}','${books[index].yop}','${books[index].author_id}','${books[index].publication_id}','${books[index].category_id}'),` 
             }
 
             values = values.slice(0, -1);
@@ -137,6 +139,33 @@ book.insert = function(books) {
     });
 };
 
+function mysql_real_escape_string (str) {
+    if (typeof str != 'string')
+        return str;
+
+    return str.replace(/[\0\x08\x09\x1a\n\r"'\\\%]/g, function (char) {
+        switch (char) {
+            case "\0":
+                return "\\0";
+            case "\x08":
+                return "\\b";
+            case "\x09":
+                return "\\t";
+            case "\x1a":
+                return "\\z";
+            case "\n":
+                return "\\n";
+            case "\r":
+                return "\\r";
+            case "\"":
+            case "'":
+            case "\\":
+            case "%":
+                return "\\"+char; // prepends a backslash to backslash, percent,
+                                  // and double/single quotes
+        }
+    });
+}
 
 /* Update book*/
 /* TODO: Take image in formdata and convert to image url and then store*/
