@@ -114,6 +114,8 @@ book.insert = function(books) {
 
             values = values.slice(0, -1);
             var query = `INSERT INTO book(book_name, description, thumb_url, price, yop, author_id, publication_id, category_id) VALUES ${values}`; 
+            console.log("Query")
+            console.log(query);
 
             connection.query(query, function(err, result, fields) {
                 if (err) {
