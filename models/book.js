@@ -109,7 +109,7 @@ book.insert = function(books) {
             var values = "";
             for (var index = 0; index < books.length; index++) {
                 var element = books[index];
-                values += ` ( ${books[index].book_name} , ${books[index].description} ,  ${books[index].thumb_url} ,${books[index].price},${books[index].yop},${books[index].autor_id},${books[index].publication_id},${books[index].category_id}),` 
+                values += ` ( '${books[index].book_name}' , '${books[index].description}' ,  '${books[index].thumb_url}' ,'${books[index].price}','${books[index].yop}','${books[index].author_id}','${books[index].publication_id}','${books[index].category_id}'),` 
             }
 
             values = values.slice(0, -1);
