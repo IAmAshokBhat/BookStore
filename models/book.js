@@ -2,6 +2,7 @@ var createConnection = require('../utilities/database_connection').getConnection
 var dateFormat = require('dateformat');
 var book = {};
 var knox = require('knox');
+require('dotenv').config();
 var s3Client = knox.createClient({
     key:  process.env.AWS_ACCESS_KEY,
     secret: process.env.AWS_SECRET_KEY,
