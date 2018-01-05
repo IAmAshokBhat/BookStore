@@ -44,8 +44,7 @@ router.get('/getBookWithName', function(req, res, next) {
 
 /* Insert book(s) */
 router.post('/book', function(req, res, next) {
-    console.log(req.body)
-    book.insert(req.body).then(function(result) {
+    book.insert(req).then(function(result) {
         res.json(result);
     });
 
@@ -62,8 +61,8 @@ router.put('/book', function(req, res, next) {
 
 /* Delete book */
 router.delete('/book', function(req, res, next) {
-    console.log(req.query.book_id)
-    book.delete(req.query.book_id).then(function(result) {
+    console.log(req.query.bookId)
+    book.delete(req.query.bookId).then(function(result) {
         res.json(result);
     });
 

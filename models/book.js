@@ -2,6 +2,9 @@ var createConnection = require('../utilities/database_connection').getConnection
 var dateFormat = require('dateformat');
 var book = {};
 var knox = require('knox');
+var formidable = require('formidable');
+var multiparty = require('multiparty');
+
 require('dotenv').config();
 var s3Client = knox.createClient({
     key:  process.env.AWS_ACCESS_KEY,
@@ -108,49 +111,52 @@ book.getBookWithName = function(name) {
 
 /* Insert book(s)*/
 /* TODO: Take image in formdata and convert to image url and then store*/
-book.insert = function(books) {
+book.insert = function(req) {
     return new Promise(function(resolve, reject) {
         createConnection(function(err, connection) {
             var data = [];
             var values = "";
-            for (var index = 0; index < books.length; index++) {
-                var element = books[index];
-                desc = mysql_real_escape_string(books[index].description);
-                name = mysql_real_escape_string(books[index].book_name)
-                values +=`  ( '${name}' , '${desc}' ,  '${books[index].thumb_url}' ,'${books[index].price}','${books[index].yop}','${books[index].author_id}','${books[index].publication_id}','${books[index].category_id}'),` 
-            }
-            // saveToS3(req.files.avatar.path, filename, req.files.avatar.name).then(function(s3Url) {
-            //     userToInsert.avatar = {};
-            //     userToInsert.avatar.url = s3Url;
-            //     userToInsert.avatar.secure_url = s3Url;
-            //     userToInsert.avatar.public_id = req.files.avatar.name;
-            //     userToInsert.image_url = s3Url;
-            //     callback();
-            // },function(err){
-            //     console.log("failed adding image to s3");
-            //     console.log(err);
-                
-            // });
-            values = values.slice(0, -1);
-            var query = `INSERT INTO book(book_name, description, thumb_url, price, yop, author_id, publication_id, category_id) VALUES ${values}`; 
-            console.log("Query")
-            console.log(query);
-
-            connection.query(query, function(err, result, fields) {
-                if (err) {
-                    var response = { data: [], status: 0, message: "" }
-                    response.message = err;
-                    reject(response)
-                } else {
-                    var response = { data: [], status: 1, message: "" }
-                    if (result.affectedRows != 0) {
-                        response.message = "No data";
+            var form = new multiparty.Form();
+            var books ;
+            form.parse(req, function(err, fields, files) {
+                console.log(fields);
+                console.log("*********")
+                console.log(files)
+               books = fields;
+               var filename =  `${process.env.S3_BUCKET}\\${files.thumb_url[0].originalFilename}`;
+               saveToS3(files.thumb_url[0].path, filename, files.thumb_url[0].originalFilename).then(function(s3Url) {
+                   console.log(s3Url);      
+                desc = mysql_real_escape_string(books.description);
+                name = mysql_real_escape_string(books.book_name)
+                values +=`  ( '${name}' , '${desc}' ,  '${s3Url}' ,'${books.price}','${books.yop}','${books.author_id}','${books.publication_id}','${books.category_id}'),` 
+                values = values.slice(0, -1);
+                var query = `INSERT INTO book(book_name, description, thumb_url, price, yop, author_id, publication_id, category_id) VALUES ${values}`; 
+                console.log("Query")
+                console.log(query);
+    
+                connection.query(query, function(err, result, fields) {
+                    if (err) {
+                        var response = { data: [], status: 0, message: "" }
+                        response.message = err;
+                        reject(response)
                     } else {
-                        response.message = "Success";
+                        var response = { data: [], status: 1, message: "" }
+                        if (result.affectedRows != 0) {
+                            response.message = "No data";
+                        } else {
+                            response.message = "Success";
+                        }
+                        resolve(response);
                     }
-                    resolve(response);
-                }
+                });
+               
+            },function(err){
+                console.log("failed adding image to s3");
+                console.log(err);
+                
             });
+          
+              });   
             connection.release();
         });
     });
@@ -416,6 +422,9 @@ book.totalBooksSold = function(fromDate, toDate, bookId) {
 
 var saveToS3 = function(path, fileName, name){
     return new Promise(function(resolve,reject){
+        console.log(`path: ${path} 
+        fileName: ${fileName}
+        name: ${name}`);
         s3Client.putFile(path,fileName,{ 'x-amz-acl': 'public-read' }, function(err, s3Response){
             // Always either do something with `res` or at least call `res.resume()`.
             if (err) {

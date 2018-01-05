@@ -475,62 +475,8 @@
                 }
             }
         },
-        "/book": {
-            "post": {
-                "tags": [
-                    "Book"
-                ],
-                "summary": "Add  books ",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [{
-                        "in": "body",
-                        "name": "body",
-                        "description": "request body parameters need to be added here",
-                        "required": true,
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/Book"
-                            }
 
-                        }
-                    },
-                    {
-                        "name": "Authorization",
-                        "in": "header",
-                        "description": "Authorization",
-                        "required": true,
-                        "type": "string",
-                        "format": "string",
-                        "example": "Bearer eyJhbGciOiJIUzI1NiJ9.ZW1haWxAbm9lbWFpbC5jb20.fGbjTahMFHe9Ad330JH5HfkhNuP4FdXICuQHgKS9Xag"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Sucess"
-                    },
-                    "400": {
-                        "description": "Bad Request"
-                    },
-                    "401": {
-                        "description": "Authentication failure"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Resource not found"
-                    },
-                    "500": {
-                        "description": "Internal Server Error"
-                    }
-                }
-            },
+        "/book": {
             "put": {
                 "tags": [
                     "Book"
