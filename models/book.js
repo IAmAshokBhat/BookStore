@@ -2,7 +2,6 @@ var createConnection = require('../utilities/database_connection').getConnection
 var dateFormat = require('dateformat');
 var book = {};
 var knox = require('knox');
-var formidable = require('formidable');
 var multiparty = require('multiparty');
 
 require('dotenv').config();
