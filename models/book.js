@@ -118,11 +118,9 @@ book.insert = function(req) {
             var form = new multiparty.Form();
             var books ;
             form.parse(req, function(err, fields, files) {
-                console.log(fields);
-                console.log("*********")
-                console.log(files)
+                
                books = fields;
-               var filename =  `${process.env.S3_BUCKET}\\${files.thumb_url[0].originalFilename}`;
+               var filename =  `${files.thumb_url[0].originalFilename}`;
                saveToS3(files.thumb_url[0].path, filename, files.thumb_url[0].originalFilename).then(function(s3Url) {
                    console.log(s3Url);      
                 desc = mysql_real_escape_string(books.description);
