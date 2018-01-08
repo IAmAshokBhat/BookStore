@@ -118,7 +118,8 @@ book.insert = function(req) {
             var form = new multiparty.Form();
             var books ;
             form.parse(req, function(err, fields, files) {
-                
+                console.log(`Files: ${files}`);
+                console.log(`fields: ${fields}`);
                books = fields;
                var filename =  `${files.thumb_url[0].originalFilename}`;
                saveToS3(files.thumb_url[0].path, filename, files.thumb_url[0].originalFilename).then(function(s3Url) {
