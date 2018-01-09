@@ -209,7 +209,7 @@ book.update = function(req) {
                    
                 }, this);
     
-                if(files.thumb_url.length>0){
+                if(files.thumb_url){
                     var filename =  `${files.thumb_url[0].originalFilename}`;
                     saveToS3(files.thumb_url[0].path, filename, files.thumb_url[0].originalFilename).then(function(s3Url) {
                         if(files){
