@@ -1,3 +1,4 @@
+
 var createConnection = require('../utilities/database_connection').getConnection;
 var dateFormat = require('dateformat');
 var book = {};
@@ -199,6 +200,7 @@ book.update = function(req) {
             form.parse(req, function(err, fields, files) {
                 console.log(`Files: ${files}`);
                 console.log(`fields: ${fields}`);
+                console.log(files.thumb_url)
                 var book = fields ;
                 Object.keys(book).forEach(function(element) {
                     if(element!="thumb_url"){
