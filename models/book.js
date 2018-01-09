@@ -190,35 +190,57 @@ function mysql_real_escape_string (str) {
 
 /* Update book*/
 /* TODO: Take image in formdata and convert to image url and then store*/
-book.update = function(book) {
+book.update = function(req) {
     return new Promise(function(resolve, reject) {
         createConnection(function(err, connection) {
             var data = [];
-            var queryBuilder = "";
-            Object.keys(book).forEach(function(element) {
-                queryBuilder += element + "='" + book[element] + "',";
-            }, this);
+            var queryBuilder = "";        
+            var form = new multiparty.Form();
+            form.parse(req, function(err, fields, files) {
+                console.log(`Files: ${files}`);
+                console.log(`fields: ${fields}`);
+                var book = fields ;
+                Object.keys(book).forEach(function(element) {
+                    if(element!="thumb_url"){
+                        queryBuilder += element + "='" + book[element] + "',";
+                    }
+                   
+                }, this);
+    
+              
+             
+               var filename =  `${files.thumb_url[0].originalFilename}`;
 
-            queryBuilder = queryBuilder.slice(0, -1);
-            var query = "UPDATE `book` SET " + queryBuilder + "WHERE book.book_id=" + book.book_id;
-
-            connection.query(query, function(err, result, fields) {
-                if (err) {
-                    var response = { data: [], status: 0, message: "" }
-                    response.message = err;
-                    reject(response)
-                }
-
-                var response = { data: [], status: 1, message: "" }
-                    //response.data = JSON.parse(JSON.stringify(result))
-                if (result.affectedRows == 0) {
-                    response.message = "Failed to update!";
-                    response.status = 0
-                } else {
-                    response.message = "Successfully updated!";
-                }
-                resolve(response);
+               saveToS3(files.thumb_url[0].path, filename, files.thumb_url[0].originalFilename).then(function(s3Url) {
+                queryBuilder += "thumb_url='"+s3Url+"',";
+                queryBuilder = queryBuilder.slice(0, -1);
+                var query = "UPDATE `book` SET " + queryBuilder + "WHERE book.book_id=" + book.book_id;
+                   console.log(query);
+                connection.query(query, function(err, result, fields) {
+                    if (err) {
+                        var response = { data: [], status: 0, message: "" }
+                        response.message = err;
+                        reject(response)
+                    }
+    
+                    var response = { data: [], status: 1, message: "" }
+                        //response.data = JSON.parse(JSON.stringify(result))
+                    if (result.affectedRows == 0) {
+                        response.message = "Failed to update!";
+                        response.status = 0
+                    } else {
+                        response.message = "Successfully updated!";
+                    }
+                    resolve(response);
+                });
+               
+            },function(err){
+                console.log("failed adding image to s3");
+                console.log(err);
+                
             });
+          
+              });          
             connection.release();
         });
     });

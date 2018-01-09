@@ -53,7 +53,7 @@ router.post('/book', function(req, res, next) {
 /* Update book(s) */
 router.put('/book', function(req, res, next) {
     console.log(req.body)
-    book.update(req.body).then(function(result) {
+    book.update(req).then(function(result) {
         res.json(result);
     });
 
