@@ -207,38 +207,60 @@ book.update = function(req) {
                    
                 }, this);
     
+                if(files.thumb_url.length>0){
+                    var filename =  `${files.thumb_url[0].originalFilename}`;
+                    saveToS3(files.thumb_url[0].path, filename, files.thumb_url[0].originalFilename).then(function(s3Url) {
+                        if(files){
+                          queryBuilder += "thumb_url='"+s3Url+"',";
+                        }                       
+                          queryBuilder = queryBuilder.slice(0, -1);          
+                          var query = "UPDATE `book` SET " + queryBuilder + "WHERE book.book_id=" + book.book_id;
+                             console.log(query);
+                          connection.query(query, function(err, result, fields) {
+                              if (err) {
+                                  var response = { data: [], status: 0, message: "" }
+                                  response.message = err;
+                                  reject(response)
+                              }
               
-             
-               var filename =  `${files.thumb_url[0].originalFilename}`;
-
-               saveToS3(files.thumb_url[0].path, filename, files.thumb_url[0].originalFilename).then(function(s3Url) {
-                queryBuilder += "thumb_url='"+s3Url+"',";
-                queryBuilder = queryBuilder.slice(0, -1);
-                var query = "UPDATE `book` SET " + queryBuilder + "WHERE book.book_id=" + book.book_id;
-                   console.log(query);
-                connection.query(query, function(err, result, fields) {
-                    if (err) {
-                        var response = { data: [], status: 0, message: "" }
-                        response.message = err;
-                        reject(response)
-                    }
-    
-                    var response = { data: [], status: 1, message: "" }
-                        //response.data = JSON.parse(JSON.stringify(result))
-                    if (result.affectedRows == 0) {
-                        response.message = "Failed to update!";
-                        response.status = 0
-                    } else {
-                        response.message = "Successfully updated!";
-                    }
-                    resolve(response);
-                });
-               
-            },function(err){
-                console.log("failed adding image to s3");
-                console.log(err);
-                
-            });
+                              var response = { data: [], status: 1, message: "" }
+                                  //response.data = JSON.parse(JSON.stringify(result))
+                              if (result.affectedRows == 0) {
+                                  response.message = "Failed to update!";
+                                  response.status = 0
+                              } else {
+                                  response.message = "Successfully updated!";
+                              }
+                              resolve(response);
+                          });
+                         
+                      },function(err){
+                          console.log("failed adding image to s3");
+                          console.log(err);
+                          
+                      });
+                }else{                            
+                        queryBuilder = queryBuilder.slice(0, -1);          
+                        var query = "UPDATE `book` SET " + queryBuilder + "WHERE book.book_id=" + book.book_id;
+                            console.log(query);
+                        connection.query(query, function(err, result, fields) {
+                            if (err) {
+                                var response = { data: [], status: 0, message: "" }
+                                response.message = err;
+                                reject(response)
+                            }
+            
+                            var response = { data: [], status: 1, message: "" }
+                                //response.data = JSON.parse(JSON.stringify(result))
+                            if (result.affectedRows == 0) {
+                                response.message = "Failed to update!";
+                                response.status = 0
+                            } else {
+                                response.message = "Successfully updated!";
+                            }
+                            resolve(response);
+                        }); 
+                }   
           
               });          
             connection.release();
